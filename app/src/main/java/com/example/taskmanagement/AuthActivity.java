@@ -15,10 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AuthActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,7 +34,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout espace3;
 
     EditText nom;
-    EditText prnom;
+    EditText prenom;
     EditText email;
     EditText tel;
     EditText login;
@@ -37,6 +44,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     Button button_register;
     Button button_signup;
     private FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
 
     @Override
@@ -44,11 +52,17 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         espace1=(LinearLayout) findViewById(R.id.espace1);
         espace2=(LinearLayout)findViewById(R.id.espace2);
         espace3=(LinearLayout)findViewById(R.id.espace3);
+        login=(EditText) findViewById(R.id.login);
         email=(EditText) findViewById(R.id.email);
+        nom=(EditText) findViewById(R.id.nom);
+        prenom=(EditText) findViewById(R.id.prenom);
+        tel=(EditText) findViewById(R.id.tel);
+
 //...
         button_login=(Button) findViewById(R.id.BttLogin);
         button_register=(Button) findViewById(R.id.BttRegister);
@@ -69,11 +83,18 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
             espace1.setVisibility(View.GONE);
         }
         else if (view.getId()==R.id.BttRegister) {
-          signup(email.getText().toString(),generatePassword());
+          signup(email.getText().toString(),
+                  generatePassword(),
+                  nom.getText().toString(),
+                  prenom.getText().toString(),
+                  tel.getText().toString());
         }
     }
 
-    private void signup(String email, String password) {
+    private void signup(String email, String password, String nom, String prenom,
+                        String tel) {
+
+        //Authentification
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -92,6 +113,29 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 });
+
+        //Stockage de l'utilisateur
+        Map<String, Object> docUser = new HashMap<>();
+        docUser.put("nom", nom);
+        docUser.put("prenom", prenom);
+        docUser.put("tel", tel);
+
+// Add a new document with a generated ID
+        db.collection("user").document(email)
+                .set(docUser)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
     }
 
     String generatePassword(){

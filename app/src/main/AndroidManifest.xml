@@ -22,9 +22,6 @@
             android:name=".TasksActivity"
             android:exported="false" />
         <activity
-            android:name=".RegiterActivity"
-            android:exported="false" />
-        <activity
             android:name=".AuthActivity"
             android:exported="true">
             <intent-filter>
