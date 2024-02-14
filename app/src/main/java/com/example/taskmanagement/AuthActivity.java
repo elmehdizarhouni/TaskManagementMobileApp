@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -62,6 +63,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         nom=(EditText) findViewById(R.id.nom);
         prenom=(EditText) findViewById(R.id.prenom);
         tel=(EditText) findViewById(R.id.tel);
+        password=(EditText) findViewById(R.id.password);
 
 //...
         button_login=(Button) findViewById(R.id.BttLogin);
@@ -75,8 +77,11 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        if(view.getId()==R.id.BttLogin)
+        if(view.getId()==R.id.BttLogin){
+            System.out.println("############@");
             signin(login.getText().toString(),password.getText().toString());
+        }
+
         else if (view.getId()==R.id.BttsignUp) {
             espace2.setVisibility(View.VISIBLE);
             espace3.setVisibility(View.GONE);
@@ -93,7 +98,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
 
     private void signup(String email, String password, String nom, String prenom,
                         String tel) {
-
+        System.out.println("********************");
         //Authentification
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -178,9 +183,10 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateUI(FirebaseUser currentUser) {
     if (currentUser!=null){
-        espace2.setVisibility(View.GONE);
-        espace3.setVisibility(View.VISIBLE);
-        espace1.setVisibility(View.GONE);
+        Intent MyIntent= new Intent(this, TasksActivity.class);
+        MyIntent.putExtra("email", currentUser.getEmail());
+        startActivity(MyIntent);
+
     }
     else{
         espace2.setVisibility(View.GONE);
