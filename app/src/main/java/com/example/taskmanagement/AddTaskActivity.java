@@ -147,7 +147,7 @@ public class AddTaskActivity extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                         // Task added successfully
                         // Finish the activity or show a success message
-                        Toast.makeText(AddTaskActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), TasksActivity.class));
 
                     })
                     .addOnFailureListener(e -> {
