@@ -1,6 +1,8 @@
 package model;
 
-public class Tache {
+import java.io.Serializable;
+
+public class Tache implements Serializable {
 
     private String title;
     private String description;

@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +35,7 @@ public class TasksActivity extends AppCompatActivity {
     FirebaseFirestore db;
     LinkedList<Tache> taches;
     RecyclerView myRecycler;
+    EditText search;
     FloatingActionButton addTask;
     private FirebaseAuth mAuth;
 
@@ -43,10 +47,27 @@ public class TasksActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-
+        search = (EditText) findViewById(R.id.hint);
         taches = new LinkedList<Tache>();
         addTask = (FloatingActionButton) findViewById(R.id.fab_add);
         myRecycler = findViewById(R.id.recycler_tasks);
+        MyAdapter myAdapter = new MyAdapter(taches, TasksActivity.this);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                myAdapter.getFilter().filter(s); // Apply filter as user types
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // This method is called after the text has changed
+                // We don't need to perform any action here, so leave it empty
+            }
+        });
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +75,8 @@ public class TasksActivity extends AppCompatActivity {
             }
         });
         getTasks();
+        // Set adapter to RecyclerView after initialization
+        myRecycler.setAdapter(myAdapter);
 
     }
 

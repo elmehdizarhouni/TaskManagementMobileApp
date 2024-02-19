@@ -1,9 +1,12 @@
 package com.example.taskmanagement;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,14 +20,45 @@ import model.Tache;
 
 import java.util.LinkedList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
     private LinkedList<Tache> taches;
     private Context context;
+    private LinkedList<Tache> filteredTaches;
     // Provide a suitable constructor (depends on the kind of dataset)
     public MyAdapter(LinkedList<Tache> taches, Context context) {
         this.taches = new LinkedList<Tache>() ;
+        this.filteredTaches = new LinkedList<>(taches);
         this.taches.addAll(taches);
         this.context=context;
+    }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String query = constraint.toString().toLowerCase().trim();
+                LinkedList<Tache> filteredList = new LinkedList<>();
+                if (query.isEmpty()) {
+                    filteredList.addAll(taches);
+                } else {
+                    for (Tache task : taches) {
+                        if (task.getTitle().toLowerCase().contains(query)) {
+                            filteredList.add(task);
+                        }
+                    }
+                }
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredTaches.clear();
+                filteredTaches.addAll((LinkedList<Tache>) results.values);
+                notifyDataSetChanged();
+            }
+        };
     }
     // Create new views (invoked by the layout manager)
 
@@ -43,15 +77,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
     // - get element from your dataset at this position
     // - replace the contents of the view with that element
-        holder.title.setText(taches.get(position).getTitle());
+        holder.title.setText(filteredTaches.get(position).getTitle());
     // Reference to an image file in Cloud Storage
-        StorageReference storageReference =
-                FirebaseStorage.getInstance().getReferenceFromUrl(taches.get(position).getImg());
+        //StorageReference storageReference =
+               // FirebaseStorage.getInstance().getReferenceFromUrl(filteredTaches.get(position).getImg());
     // Download directly from StorageReference using Glide
     // (See MyAppGlideModule for Loader registration)
         Glide.with(context /* context */)
-                .load(storageReference)
+                .load(filteredTaches.get(position).getImg())
                 .into(holder.img);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // When an item is clicked, create an intent to start TaskDetailsActivity
+                Intent intent = new Intent(context, TaskActivity.class);
+                // Put the selected task as an extra in the intent
+                intent.putExtra("task", filteredTaches.get(position));
+                // Start the activity
+                context.startActivity(intent);
+            }
+        });
     }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
@@ -74,6 +119,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
         @Override
         public void onClick(View v) {
+
 
         }
     }
