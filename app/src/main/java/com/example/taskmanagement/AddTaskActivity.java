@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -83,6 +85,7 @@ public class AddTaskActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             // Set the selected image to ImageView
             Uri imageUri = data.getData();
+
         }
     }
     // Upload image to Firebase Cloud Storage
@@ -130,6 +133,10 @@ public class AddTaskActivity extends AppCompatActivity {
         return Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Image", null));
     }
     private void addTaskWithImage(String imageUrl) {
+        ProgressBar loadingProgressBar = findViewById(R.id.loadingProgressBar);
+        TextView loadingText = findViewById(R.id.loadingText);
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        loadingText.setVisibility(View.VISIBLE);
         Map<String, Object> taskMap = new HashMap<>();
         taskMap.put("title", task.getText().toString());
         taskMap.put("description", description.getText().toString());
