@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +34,16 @@ public class AuthActivity extends AppCompatActivity {
         password=(EditText) findViewById(R.id.password);
 
         button_login = findViewById(R.id.BttLogin);
+        TextView textSignup = findViewById(R.id.text_signup);
+        textSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Redirection vers RegisterActivity
+                Intent intent = new Intent(AuthActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
