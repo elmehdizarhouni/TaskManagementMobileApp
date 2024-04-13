@@ -19,8 +19,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,6 +32,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,7 +87,6 @@ public class AddTaskActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             // Set the selected image to ImageView
             Uri imageUri = data.getData();
-
         }
     }
     // Upload image to Firebase Cloud Storage
@@ -130,13 +131,31 @@ public class AddTaskActivity extends AppCompatActivity {
         Bitmap bitmap = drawable.getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        return Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Image", null));
+
+        // Generate a random image name
+        String imageName = "image_" + System.currentTimeMillis() + ".jpg";
+
+        // Get reference to the cache directory
+        File cacheDirectory = getCacheDir();
+
+        // Create a temporary file to store the image
+        File imageFile = new File(cacheDirectory, imageName);
+
+        try {
+            // Write the bitmap data to the file
+            FileOutputStream fos = new FileOutputStream(imageFile);
+            fos.write(baos.toByteArray());
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Return the file URI of the image
+        return Uri.fromFile(imageFile);
     }
+
     private void addTaskWithImage(String imageUrl) {
-        ProgressBar loadingProgressBar = findViewById(R.id.loadingProgressBar);
-        TextView loadingText = findViewById(R.id.loadingText);
-        loadingProgressBar.setVisibility(View.VISIBLE);
-        loadingText.setVisibility(View.VISIBLE);
         Map<String, Object> taskMap = new HashMap<>();
         taskMap.put("title", task.getText().toString());
         taskMap.put("description", description.getText().toString());
