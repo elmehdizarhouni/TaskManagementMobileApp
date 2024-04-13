@@ -33,38 +33,13 @@ public class DeleteTaskActivity extends AppCompatActivity {
                 .show();
     }
 
-    public static void deleteTask(Context context, String documentId) {
+    public static void deleteTask(final Context context, final String documentId) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+
         firestore.collection("user").document(user.getEmail())
-                .collection("Tasks")
-                .document(documentId)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            // Le document existe, afficher ses données dans les logs
-                            Log.d("Firestore", "Document data: " + documentSnapshot.getData());
-                        } else {
-                            // Le document n'existe pas
-                            Log.d("Firestore", "No such document");
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Gérer les erreurs
-                        Log.w("Firestore", "Error getting document", e);
-                    }
-                });
-
-
-        firestore.collection("user")
-                .document(user.getEmail())
                 .collection("Tasks")
                 .document(documentId)
                 .delete()
@@ -73,7 +48,8 @@ public class DeleteTaskActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         // Task deleted successfully
                         Toast.makeText(context, "Task deleted successfully", Toast.LENGTH_SHORT).show();
-                        // Optionally, you can finish an activity if it's relevant.
+
+                        // Return to tasks page
                         Intent intent = new Intent(context, TasksActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
@@ -87,4 +63,5 @@ public class DeleteTaskActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }

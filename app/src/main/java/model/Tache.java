@@ -10,11 +10,23 @@ public class Tache implements Serializable {
     private String img;
     private String doc_uri;
 
-    public Tache(String title, String description, String deadline, String img){
+
+
+    private String id;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Tache(String title, String description, String deadline, String img , String id){
         this.title=title;
         this.description=description;
         this.deadline=deadline;
         this.img=img;
+        this.id=id;
     }
 
     public String getTitle() {

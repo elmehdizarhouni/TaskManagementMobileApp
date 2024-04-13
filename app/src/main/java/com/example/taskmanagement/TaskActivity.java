@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -18,6 +20,7 @@ public class TaskActivity extends AppCompatActivity {
     TextView descriptionTextView;
     TextView deadlineTextView;
     ImageView imageView;
+    String documentId;
 
 
     @Override
@@ -28,6 +31,7 @@ public class TaskActivity extends AppCompatActivity {
         // Get the selected task from the intent
         Intent intent = getIntent();
         Tache selectedTask = (Tache) intent.getSerializableExtra("task");
+        documentId = selectedTask.getId();
 
         // Display the details of the selected task
         titleTextView = (TextView) findViewById(R.id.titleTextView);
@@ -44,5 +48,14 @@ public class TaskActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(storageReference)
                 .into(imageView);
+
+        FloatingActionButton deleteButton = findViewById(R.id.deletebutton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Call the method to show delete confirmation dialog
+                DeleteTaskActivity.showDeleteConfirmationDialog(TaskActivity.this, documentId);
+            }
+        });
     }
 }

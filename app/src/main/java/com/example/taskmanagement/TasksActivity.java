@@ -91,7 +91,7 @@ public class TasksActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Tache tache = new Tache(document.getString("title"), document.getString("description"), document.getString("deadline"), document.getString("img"));
+                                Tache tache = new Tache(document.getString("title"), document.getString("description"), document.getString("deadline"), document.getString("img"), document.getId());
                                 taches.add(tache);
 
                             }

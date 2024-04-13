@@ -161,28 +161,44 @@ public class AddTaskActivity extends AppCompatActivity {
         taskMap.put("description", description.getText().toString());
         taskMap.put("deadline", deadline.getText().toString());
         taskMap.put("img", imageUrl); // Add image URL to task details
-
+        taskMap.put("id", imageUrl);
         // Get current user
         FirebaseUser user = mAuth.getCurrentUser();
 
+        // Add task details to Firestore
         // Add task details to Firestore
         if (user != null) {
             db.collection("user").document(user.getEmail()).collection("Tasks")
                     .add(taskMap)
                     .addOnSuccessListener(documentReference -> {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                        // Task added successfully
-                        // Finish the activity or show a success message
-                        startActivity(new Intent(getApplicationContext(), TasksActivity.class));
+                        String taskId = documentReference.getId();
+
+                        // Update task ID with Firestore generated ID
+                        Map<String, Object> updatedTaskMap = new HashMap<>(taskMap);
+                        updatedTaskMap.put("id", taskId);
+
+                        // Update task data in Firestore
+                        documentReference.set(updatedTaskMap)
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d(TAG, "Task data updated with ID: " + taskId);
+                                    // Task added and data updated successfully
+                                    // Finish the activity or show a success message
+                                    startActivity(new Intent(getApplicationContext(), TasksActivity.class));
+                                })
+                                .addOnFailureListener(e -> {
+                                    // Handle errors
+                                    Log.e(TAG, "Error updating task data", e);
+                                    // Show an error message to the user if necessary
+                                });
 
                     })
                     .addOnFailureListener(e -> {
-                        // Handle errors
-                        Log.e(TAG, "Error adding document", e);
-                        // Show an error message to the user
-                        Toast.makeText(AddTaskActivity.this, "Failed to add task", Toast.LENGTH_SHORT).show();
+                        // Handle errors when adding task
+                        Log.e(TAG, "Error adding task", e);
+                        // Show an error message to the user if necessary
                     });
         }
+
     }
     public void onClick(View view) {
         if (view.getId() == R.id.btnAdd) {
