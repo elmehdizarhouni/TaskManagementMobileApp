@@ -58,10 +58,10 @@ public class UpdateTaskActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        task = findViewById(R.id.task);
-        description = findViewById(R.id.description);
-        deadline = findViewById(R.id.deadline);
-        update_task = findViewById(R.id.btnUpdate);
+        task = (EditText)findViewById(R.id.task);
+        description = (EditText) findViewById(R.id.description);
+        deadline = (EditText) findViewById(R.id.deadline);
+        update_task =  (Button) findViewById(R.id.btnUpdate);
         select_image = findViewById(R.id.btnSelectImage);
         imageView = findViewById(R.id.imageView);
 
@@ -198,7 +198,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
     private void updateTaskWithImage(String imageUrl) {
         // Mettre à jour les détails de la tâche avec l'URL de l'image dans Firestore
         db.collection("user").document(getCurrentUserEmail()).collection("Tasks").document(taskId)
-                .update("img", imageUrl)
+                .update("img", imageUrl )
                 .addOnSuccessListener(aVoid -> {
                     // Succès de la mise à jour
                     Log.d(TAG, "Image de la tâche mise à jour avec succès");
