@@ -129,7 +129,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
     }
 
     // Mettre à jour l'image de la tâche dans Firebase Cloud Storage
-    private void updateImage() {
+    private void updateImage(String taskTitle, String taskDescription, String taskDeadline) {
         if (imageView.getDrawable() != null) {
             // Obtenir une référence vers Firebase Storage
             StorageReference storageRef = storage.getReference();
@@ -151,7 +151,7 @@ public class UpdateTaskActivity extends AppCompatActivity {
                 // Image téléchargée avec succès, obtenir l'URL de téléchargement
                 imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     // URL de téléchargement de l'image obtenue, maintenant mettre à jour les détails de la tâche avec l'URL de l'image dans Firestore
-                    updateTaskWithImage(uri.toString());
+                    updateTaskWithImage(uri.toString(), taskTitle, taskDescription, taskDeadline);
                 }).addOnFailureListener(e -> {
                     // Gérer l'erreur
                     Log.e(TAG, "Erreur lors de l'obtention de l'URL de téléchargement", e);
@@ -195,14 +195,19 @@ public class UpdateTaskActivity extends AppCompatActivity {
         return Uri.fromFile(imageFile);
     }
 
-    private void updateTaskWithImage(String imageUrl) {
+    private void updateTaskWithImage(String imageUrl,String taskTitle, String taskDescription, String taskDeadline) {
         // Mettre à jour les détails de la tâche avec l'URL de l'image dans Firestore
         db.collection("user").document(getCurrentUserEmail()).collection("Tasks").document(taskId)
-                .update("img", imageUrl )
+                .update( "img", imageUrl,
+                        "title", taskTitle,
+                        "description", taskDescription,
+                        "deadline", taskDeadline )
                 .addOnSuccessListener(aVoid -> {
                     // Succès de la mise à jour
                     Log.d(TAG, "Image de la tâche mise à jour avec succès");
                     // Finir l'activité ou afficher un message de succès
+                    setResult(RESULT_OK);
+                    
                     finish();
                 })
                 .addOnFailureListener(e -> {
@@ -214,8 +219,11 @@ public class UpdateTaskActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         if (view.getId() == R.id.btnUpdate) {
+            String taskTitle = task.getText().toString();
+            String taskDescription = description.getText().toString();
+            String taskDeadline = deadline.getText().toString();
             // Mettre à jour l'image de la tâche dans Firebase Cloud Storage
-            updateImage();
+            updateImage(taskTitle, taskDescription, taskDeadline);
         }
     }
 
