@@ -61,11 +61,11 @@ public class TaskActivity extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Créer un intent pour démarrer UpdateTaskActivity
+                // Create an intent to start UpdateTaskActivity
                 Intent updateIntent = new Intent(TaskActivity.this, UpdateTaskActivity.class);
-                // Passer l'ID de la tâche à mettre à jour à UpdateTaskActivity
+                // Pass the ID of the task to update to UpdateTaskActivity
                 updateIntent.putExtra("taskId", documentId);
-                // Démarrer l'activité UpdateTaskActivity
+                // Start the activity UpdateTaskActivity
                 startActivity(updateIntent);
             }
         });

@@ -50,6 +50,8 @@ public class UpdateTaskActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private ActivityResultLauncher<String> pickImageLauncher;
     private String taskId; // ID de la tâche à mettre à jour
+    private static final int TASK_UPDATED_RESULT_CODE = 1001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,11 +205,13 @@ public class UpdateTaskActivity extends AppCompatActivity {
                         "description", taskDescription,
                         "deadline", taskDeadline )
                 .addOnSuccessListener(aVoid -> {
-                    // Succès de la mise à jour
-                    Log.d(TAG, "Image de la tâche mise à jour avec succès");
-                    // Finir l'activité ou afficher un message de succès
-                    setResult(RESULT_OK);
-                    
+                    setResult(TASK_UPDATED_RESULT_CODE);
+
+                    // Finish the activity and navigate back to the task list activity
+                    Intent intent = new Intent(UpdateTaskActivity.this, TasksActivity.class);
+
+                    startActivity(intent);
+
                     finish();
                 })
                 .addOnFailureListener(e -> {
