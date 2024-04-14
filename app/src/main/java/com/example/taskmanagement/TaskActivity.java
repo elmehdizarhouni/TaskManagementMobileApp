@@ -57,5 +57,18 @@ public class TaskActivity extends AppCompatActivity {
                 DeleteTaskActivity.showDeleteConfirmationDialog(TaskActivity.this, documentId);
             }
         });
+        FloatingActionButton updateButton = findViewById(R.id.updatebutton);
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Créer un intent pour démarrer UpdateTaskActivity
+                Intent updateIntent = new Intent(TaskActivity.this, UpdateTaskActivity.class);
+                // Passer l'ID de la tâche à mettre à jour à UpdateTaskActivity
+                updateIntent.putExtra("taskId", documentId);
+                // Démarrer l'activité UpdateTaskActivity
+                startActivity(updateIntent);
+            }
+        });
+
     }
 }
