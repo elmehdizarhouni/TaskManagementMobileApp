@@ -16,6 +16,13 @@
         android:name=".CalendarActivity"
         android:exported="false" />
         <activity
+        android:name=".EventEditActivity"
+        android:exported="false" />
+        <activity
+            android:name=".WeekViewActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".AddTaskActivity"
             android:exported="false" />
         <activity
