@@ -26,14 +26,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/location_icon"/>
+            android:src="@drawable/task"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="M_Task"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/myfont"
             android:textSize="32sp"
             android:textColor="@color/white"/>
 
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Welcome"
-                android:textColor="@color/my_primary"
+                android:textColor="@color/black"
                 android:textSize="32sp"
                 android:textStyle="bold"/>
 
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sign up"
                     android:textStyle="bold"
-                    android:textColor="@color/my_primary"
+                    android:textColor="@color/black"
                     android:layout_centerVertical="true"
                     android:alpha="0.7"/>
 
@@ -136,6 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Login"
+                app:backgroundTint="@color/my_primary"
 
                 app:cornerRadius="32dp"/>
 

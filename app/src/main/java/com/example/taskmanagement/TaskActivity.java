@@ -1,21 +1,27 @@
 package com.example.taskmanagement;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import model.Tache;
 
-public class TaskActivity extends AppCompatActivity {
+public class TaskActivity extends HomeActivity {
     TextView titleTextView;
     TextView descriptionTextView;
     TextView deadlineTextView;
@@ -27,6 +33,9 @@ public class TaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getResources().getColor(R.color.purple_200));
 
         // Get the selected task from the intent
         Intent intent = getIntent();
@@ -42,6 +51,17 @@ public class TaskActivity extends AppCompatActivity {
         titleTextView.setText(selectedTask.getTitle());
         descriptionTextView.setText(selectedTask.getDescription());
         deadlineTextView.setText(selectedTask.getDeadline());
+
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,  R.string.open_nav,
+                R.string.close_nav);
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.black));
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         // Load the image from Firebase Storage using Glide
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(selectedTask.getImg());

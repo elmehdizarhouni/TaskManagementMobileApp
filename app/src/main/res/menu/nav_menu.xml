@@ -9,7 +9,7 @@
 
         <item
             android:id="@+id/nav_tasks"
-            android:icon="@drawable/ic_menuhome"
+            android:icon="@drawable/baseline_task_24"
             android:title="Tasks"/>
 
         <item
@@ -21,7 +21,10 @@
             android:id="@+id/nav_calendrier"
             android:icon="@drawable/baseline_t_calendar_24"
             android:title="calendrier"/>
-
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/baseline_manage_accounts_24"
+            android:title="profile"/>
 
     </group>
     <item

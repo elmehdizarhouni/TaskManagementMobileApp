@@ -32,5 +32,6 @@
         android:layout_gravity="end"
         android:layout_margin="16dp"
         android:contentDescription="add task"
+        app:backgroundTint="@color/my_primary"
         android:src="@android:drawable/ic_input_add"/>
 </LinearLayout>

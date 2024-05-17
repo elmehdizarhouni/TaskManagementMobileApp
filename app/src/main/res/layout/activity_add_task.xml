@@ -12,7 +12,8 @@
             android:id="@+id/task"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Task"
+            android:hint="Enter the Task name "
+            android:fontFamily="@font/myfont"
             android:inputType="text"
             android:textSize="30sp"
 
@@ -22,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Description"
+            android:fontFamily="@font/myfont"
             android:inputType="text"
             android:textSize="30sp"
             />
@@ -30,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Deadline"
+            android:fontFamily="@font/myfont"
             android:inputType="text"
             android:textSize="30sp"
             />
@@ -37,12 +40,15 @@
             android:id="@+id/btnSelectImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:backgroundTint="@color/my_primary"
+            android:fontFamily="@font/myfont"
             android:text="Select Image"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp" />
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
@@ -51,7 +57,9 @@
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="match_parent"
+            app:backgroundTint="@color/my_primary"
             android:layout_height="50dp"
+            android:fontFamily="@font/myfont"
             android:text="Add Task"/>
 
         <RelativeLayout

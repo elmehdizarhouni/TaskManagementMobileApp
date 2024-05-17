@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.taskmanagement"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -55,6 +55,11 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
     implementation ("com.firebaseui:firebase-ui-storage:7.2.0")
     implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("com.google.android.material:material:1.3.0")
+    implementation ("com.applandeo:material-calendar-view:1.9.2")
+
+
+
 
 
 }
