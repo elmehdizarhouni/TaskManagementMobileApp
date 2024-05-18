@@ -25,47 +25,27 @@ import java.util.LinkedList;
 
 import model.notes;
 
-public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> implements Filterable {
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder>  {
     private LinkedList<notes> notesList;
     private LinkedList<notes> filteredNotes;
     private Context context;
 
     public NotesAdapter(LinkedList<notes> notesList, Context context) {
         this.notesList = new LinkedList<>();
+
+
         this.filteredNotes = new LinkedList<>(notesList);
         this.notesList.addAll(notesList);
         this.context = context;
     }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String query = constraint.toString().toLowerCase().trim();
-                LinkedList<notes> filteredList = new LinkedList<>();
-                if (query.isEmpty()) {
-                    filteredList.addAll(notesList);
-                } else {
-                    for (notes note : notesList) {
-                        if (note.getTitle().toLowerCase().contains(query)) {
-                            filteredList.add(note);
-                        }
-                    }
-                }
-                FilterResults results = new FilterResults();
-                results.values = filteredList;
-                return results;
-            }
 
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredNotes.clear();
-                filteredNotes.addAll((LinkedList<notes>) results.values);
-                notifyDataSetChanged();
-            }
-        };
+    @Override
+    public int getItemCount() {
+        return filteredNotes.size(); // Utilisez filteredNotes.size() pour obtenir le nombre d'éléments affichés
     }
+
+
 
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -98,10 +78,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return filteredNotes.size();
-    }
+
 
     private void deleteNoteFromFirestore(notes note) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -143,4 +120,5 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             deleteButton = itemView.findViewById(R.id.deletebutton);
         }
     }
+
 }

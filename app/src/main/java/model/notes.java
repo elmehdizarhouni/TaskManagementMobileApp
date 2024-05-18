@@ -19,6 +19,7 @@ public class notes implements Serializable{
         this.id=id;
     }
 
+
     public String getTitle() {
         return title;
     }
