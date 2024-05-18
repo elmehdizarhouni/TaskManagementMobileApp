@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         };
 
         if(item.getItemId()==R.id.nav_notes){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            startActivity(new Intent(this, NotesActivity.class));
         };
         if(item.getItemId()==R.id.nav_calendrier){
             startActivity(new Intent(this, CalendarActivity.class));
