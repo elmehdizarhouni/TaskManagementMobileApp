@@ -2,7 +2,9 @@ package com.example.taskmanagement;
 import static com.example.taskmanagement.CalendarUtils.daysInMonthArray;
 import static com.example.taskmanagement.CalendarUtils.monthYearFromDate;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,13 +16,15 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-public class CalendarActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener {
+public class CalendarActivity extends HomeActivity implements CalendarAdapter.OnItemListener {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
 
@@ -36,6 +40,15 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         initWidgets();
         CalendarUtils.selectedDate = LocalDate.now();
         setMonthView();
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,  R.string.open_nav,
+                R.string.close_nav);
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.black));
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
     private void initWidgets()

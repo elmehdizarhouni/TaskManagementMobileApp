@@ -3,7 +3,9 @@ package com.example.taskmanagement;
 import static com.example.taskmanagement.CalendarUtils.daysInWeekArray;
 import static com.example.taskmanagement.CalendarUtils.monthYearFromDate;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,12 +18,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 
 
-public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener
+public class WeekViewActivity extends HomeActivity implements CalendarAdapter.OnItemListener
 {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
@@ -37,6 +41,15 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         setContentView(R.layout.activity_week_view);
         initWidgets();
         setWeekView();
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,  R.string.open_nav,
+                R.string.close_nav);
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.black));
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
     private void initWidgets()

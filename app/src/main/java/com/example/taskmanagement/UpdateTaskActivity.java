@@ -6,7 +6,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -39,7 +42,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class UpdateTaskActivity extends AppCompatActivity {
+public class UpdateTaskActivity extends HomeActivity {
     EditText task;
     EditText description;
     EditText deadline;
@@ -89,6 +92,15 @@ public class UpdateTaskActivity extends AppCompatActivity {
 
         // Charger les détails de la tâche depuis Firestore
         loadTaskDetails();
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,  R.string.open_nav,
+                R.string.close_nav);
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.black));
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
     private void loadTaskDetails() {
