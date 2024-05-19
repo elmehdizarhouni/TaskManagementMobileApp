@@ -4,7 +4,6 @@ import static com.example.taskmanagement.CalendarUtils.daysInWeekArray;
 import static com.example.taskmanagement.CalendarUtils.monthYearFromDate;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,13 +15,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import model.Event;
 
 
 public class WeekViewActivity extends HomeActivity implements CalendarAdapter.OnItemListener
