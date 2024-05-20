@@ -44,6 +44,9 @@
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".UpdateProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".LogoutActivity"
             android:exported="false" />
         <activity
