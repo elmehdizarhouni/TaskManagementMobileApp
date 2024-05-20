@@ -45,12 +45,21 @@
 
 
 
-
         <FrameLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment_container"/>
+            android:id="@+id/fragment_container">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Toujours Glisser pour accéder au menu "
+                android:fontFamily="@font/myfont"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 
