@@ -58,8 +58,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if(item.getItemId()==R.id.nav_calendrier){
             startActivity(new Intent(this, CalendarActivity.class));
         };
-        if(item.getItemId()==R.id.nav_logout){
+        if(item.getItemId()==R.id.nav_profile){
             startActivity(new Intent(this, ProfileActivity.class));
+        };
+        if(item.getItemId()==R.id.nav_logout){
+            startActivity(new Intent(this, LogoutActivity.class));
         };
 
 
