@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this, CalendarActivity.class));
         };
         if(item.getItemId()==R.id.nav_logout){
-            Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, ProfileActivity.class));
         };
 
 

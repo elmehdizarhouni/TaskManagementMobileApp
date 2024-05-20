@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            saveUserToFirestore(user.getUid(), nom, prenom, email, tel);
+                            saveUserToFirestore( nom, prenom, email, tel);
                         } else {
                             Log.w("RegisterActivity", "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
@@ -88,14 +88,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 });
     }
 
-    private void saveUserToFirestore(String userId, String nom, String prenom, String email, String tel) {
+    private void saveUserToFirestore(String nom, String prenom, String email, String tel) {
         Map<String, Object> user = new HashMap<>();
         user.put("nom", nom);
         user.put("prenom", prenom);
-        user.put("email", email);
         user.put("tel", tel);
 
-        db.collection("user").document(userId)
+        db.collection("user").document(email)
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

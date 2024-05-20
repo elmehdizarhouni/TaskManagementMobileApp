@@ -3,19 +3,28 @@ package com.example.taskmanagement;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.Event;
 
@@ -24,12 +33,19 @@ public class EventEditActivity extends HomeActivity {
     private TextView eventDateTV, eventTimeTV;
 
     private LocalTime time;
+    FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
+    private Button add_event;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
-
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        add_event = findViewById(R.id.addEvent);
         // Set the status bar color
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -50,7 +66,12 @@ public class EventEditActivity extends HomeActivity {
                 showTimePickerDialog();
             }
         });
-
+        add_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveEventAction();
+            }
+        });
         // Setup navigation drawer
         setupDrawer();
     }
@@ -92,7 +113,7 @@ public class EventEditActivity extends HomeActivity {
         timePickerDialog.show();
     }
 
-    public void saveEventAction(View view) {
+    public void saveEventAction() {
         // Get the event name from EditText
         String eventName = eventNameET.getText().toString();
         if (eventName.isEmpty()) {
@@ -103,6 +124,16 @@ public class EventEditActivity extends HomeActivity {
         // Create a new event with the selected date and time
         Event newEvent = new Event(eventName, CalendarUtils.selectedDate, time);
         Event.eventsList.add(newEvent);
+        FirebaseUser user = mAuth.getCurrentUser();
+        Map<String, Object> event = new HashMap<>();
+        event.put("name",eventName);
+        event.put("date",eventDateTV.getText().toString());
+        event.put("time",time);
+        db.collection("user").document(user.getEmail()).collection("events").add(event)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("event add", "success");
+                    //startActivity(new Intent(getApplicationContext() , WeekViewActivity.class));
+                });
         // Close the activity
         finish();
     }
