@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +72,7 @@ public class ProfileActivity extends HomeActivity {
 
 
     private FirebaseAuth mAuth;
+    private ProgressBar profileLoading;
     FirebaseFirestore db;
 
     @Override
@@ -82,7 +84,7 @@ public class ProfileActivity extends HomeActivity {
         profileName = findViewById(R.id.profile_name);
         profilePrenom = findViewById(R.id.profile_prenom);
         profileNumber = findViewById(R.id.profile_number);
-
+        profileLoading = findViewById(R.id.profile_loading);
 
 
         // Set the status bar color to purple
@@ -116,6 +118,7 @@ public class ProfileActivity extends HomeActivity {
     }
     private void loadUserProfile() {
         FirebaseUser user = mAuth.getCurrentUser();
+        profileLoading.setVisibility(View.VISIBLE);
 
         if (user != null) {
             db.collection("user").document(user.getEmail()).get()
@@ -123,6 +126,7 @@ public class ProfileActivity extends HomeActivity {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()){
+                                profileLoading.setVisibility(View.GONE);
                                 Log.d("herre", "im heere");
                                 DocumentSnapshot document = task.getResult();
                                 User user = new User(document.getString("nom"), document.getString("prenom"), document.getString("tel"));

@@ -23,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -54,6 +55,7 @@ public class AddTaskActivity extends HomeActivity {
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
+    private ProgressBar profileLoading;
     private static final int PICK_IMAGE_REQUEST = 1;
     private ActivityResultLauncher<String> pickImageLauncher;
     @Override
@@ -71,6 +73,7 @@ public class AddTaskActivity extends HomeActivity {
         deadline=(EditText) findViewById(R.id.deadline);
         add_task = (Button) findViewById(R.id.btnAdd);
         select_image = findViewById(R.id.btnSelectImage);
+        profileLoading = findViewById(R.id.profile_loading);
         imageView = findViewById(R.id.imageView);
         add_task.setOnClickListener(this::onClick);
         select_image.setOnClickListener(this::onSelectImage);
@@ -189,7 +192,7 @@ public class AddTaskActivity extends HomeActivity {
                     .add(taskMap)
                     .addOnSuccessListener(documentReference -> {
                         String taskId = documentReference.getId();
-
+                        profileLoading.setVisibility(View.VISIBLE);
                         // Update task ID with Firestore generated ID
                         Map<String, Object> updatedTaskMap = new HashMap<>(taskMap);
                         updatedTaskMap.put("id", taskId);
@@ -200,6 +203,7 @@ public class AddTaskActivity extends HomeActivity {
                                     Log.d(TAG, "Task data updated with ID: " + taskId);
                                     // Task added and data updated successfully
                                     // Finish the activity or show a success message
+                                    profileLoading.setVisibility(View.GONE);
                                     startActivity(new Intent(getApplicationContext(), TasksActivity.class));
                                 })
                                 .addOnFailureListener(e -> {
