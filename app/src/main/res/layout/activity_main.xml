@@ -39,25 +39,34 @@
                 android:elevation="0dp"
                 style="@style/Widget.AppCompat.ImageButton" />
 
-
-
         </RelativeLayout>
-
-
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/fragment_container">
 
+            <!-- Nouveau TextView ajouté ici -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Toujours Glisser pour accéder au menu "
+                android:text="Welcome to your Task Management App"
+                android:fontFamily="@font/fonto"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_marginTop="16dp"/>
+
+            <!-- Texte existant -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Toujours Glisser pour accéder au menu"
                 android:fontFamily="@font/myfont"
                 android:textSize="18sp"
                 android:layout_gravity="center"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:layout_marginTop="48dp"/>
 
         </FrameLayout>
 
