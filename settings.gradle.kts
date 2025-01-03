@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TaskManagement"
+rootProject.name = "SoutienScolaire"
 include(":app")
  
