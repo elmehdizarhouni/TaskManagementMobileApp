@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1053333167800",
-    "project_id": "task-management-66c1b",
-    "storage_bucket": "task-management-66c1b.appspot.com"
+    "project_number": "587788786070",
+    "project_id": "soutien-scolaire-bf3db",
+    "storage_bucket": "soutien-scolaire-bf3db.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1053333167800:android:ece2e49132aeca7ca21e4d",
+        "mobilesdk_app_id": "1:587788786070:android:5d89944ac3e6963c29e5b7",
         "android_client_info": {
-          "package_name": "com.example.taskmanagement"
+          "package_name": "com.example.soutienscolaire"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyATsZ-sYf6cep5FF9x9LIbwdG0enVYANSQ"
+          "current_key": "AIzaSyCwg-D-sOnRYuEcqBFY0GkQFd3iK3CWhSE"
         }
       ],
       "services": {

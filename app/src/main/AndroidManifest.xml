@@ -23,19 +23,19 @@
             android:exported="false" />
 
         <activity
-            android:name=".AddTaskActivity"
+            android:name=".AddCourseActivity"
             android:exported="false" />
         <activity
             android:name=".AddNotesActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateTaskActivity"
+            android:name=".UpdateCourseActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".TaskActivity"
+            android:name=".CourseActivity"
             android:exported="false" />
         <activity
             android:name=".NotesActivity"
@@ -50,7 +50,7 @@
             android:name=".LogoutActivity"
             android:exported="false" />
         <activity
-            android:name=".TasksActivity"
+            android:name=".CoursesActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity android:name=".RegisterActivity" />

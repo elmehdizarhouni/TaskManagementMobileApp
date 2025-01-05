@@ -26,16 +26,16 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/task"/>
+            android:src="@drawable/course"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="M_Task"
-            android:textStyle="bold"
+            android:layout_width="383dp"
+            android:layout_height="70dp"
             android:fontFamily="@font/myfont"
+            android:text="SmartProf"
+            android:textColor="@color/white"
             android:textSize="32sp"
-            android:textColor="@color/white"/>
+            android:textStyle="bold" />
 
 
     </LinearLayout>

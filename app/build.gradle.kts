@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.taskmanagement"
+    namespace = "com.example.soutienscolaire"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.taskmanagement"
+        applicationId = "com.example.soutienscolaire"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
