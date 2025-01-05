@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TaskManagement</string>
+    <string name="app_name">SmartProf</string>
     <string name="my_image_description">images</string>
     <string name="update_button_description">update</string>
     <string name="delete_button_description">update</string>

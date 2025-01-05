@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome to your Task Management App"
+                android:text="Welcome to your Educational Support App"
                 android:fontFamily="@font/fonto"
                 android:textSize="18sp"
                 android:layout_gravity="center_horizontal"
@@ -61,7 +61,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Toujours Glisser pour accéder au menu"
+                android:text="Swipe to access the menu"
                 android:fontFamily="@font/myfont"
                 android:textSize="18sp"
                 android:layout_gravity="center"
