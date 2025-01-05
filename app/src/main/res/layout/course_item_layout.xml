@@ -27,30 +27,6 @@
         android:textStyle="bold"
         android:textColor="@android:color/black" />
 
-    <!-- Enseignant associé au cours -->
-    <TextView
-        android:id="@+id/teacher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/subject"
-        android:layout_toEndOf="@id/img"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Teacher Name"
-        android:textSize="16sp"
-        android:textColor="@android:color/black" />
 
-    <!-- Date du cours -->
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/teacher"
-        android:layout_toEndOf="@id/img"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Course Date"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
 
 </RelativeLayout>

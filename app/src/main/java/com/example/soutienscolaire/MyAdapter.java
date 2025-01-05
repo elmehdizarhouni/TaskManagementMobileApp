@@ -48,14 +48,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         // Load the image of the course into the ImageView using Glide library
         Glide.with(context)
-                .load(currentCourse.getTeacher()) // Assuming "teacher" contains an image URL
+                .load(currentCourse.getImg())
                 .into(holder.img);
 
         // Set click listener for the course item
         holder.itemView.setOnClickListener(v -> {
             int adapterPosition = holder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
-                Intent intent = new Intent(context, CourseDetailsActivity.class);
+                Intent intent = new Intent(context, CourseActivity.class);
                 intent.putExtra("course", filteredCourses.get(adapterPosition));
                 context.startActivity(intent);
             }
@@ -69,15 +69,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a reference to the views for each data item
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener {
         public TextView subject;
         public ImageView img;
 
         // Constructor to initialize the views in the ViewHolder
-        public MyViewHolder(@NonNull View itemLayoutView) {
+        public MyViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             subject = itemLayoutView.findViewById(R.id.subject);
             img = itemLayoutView.findViewById(R.id.img);
+            itemLayoutView.setOnClickListener(this);
+        }
+
+        // Handle click events on the task item
+        @Override
+        public void onClick(View v) {
+            // Not implemented in this example
         }
     }
 }

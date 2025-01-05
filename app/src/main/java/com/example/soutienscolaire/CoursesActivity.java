@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -109,17 +109,25 @@ public class CoursesActivity extends HomeActivity {
                                         document.getString("description"),
                                         document.getString("date"),
                                         document.getString("teacher"),
+                                        document.getString("img"),
                                         document.getId()
                                 );
                                 courses.add(course);
                             }
-                            myAdapter.notifyDataSetChanged();
+                            myRecycler.setHasFixedSize(true);
+                            // use a linear layout manager
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(CoursesActivity.this);
+                            myRecycler.setLayoutManager(layoutManager);
+                            // specify an adapter
+                            MyAdapter myAdapter = new MyAdapter(courses, CoursesActivity.this);
+                            myRecycler.setAdapter(myAdapter);
                         } else {
                             Log.e("CoursesActivity", "Error fetching courses: ", task.getException());
                         }
                     });
         }
     }
+
 
     // Perform search in Firestore
     private void performSearch(String query) {
@@ -140,6 +148,7 @@ public class CoursesActivity extends HomeActivity {
                                         document.getString("description"),
                                         document.getString("date"),
                                         document.getString("teacher"),
+                                        document.getString("img"),
                                         document.getId()
                                 );
                                 courses.add(course);

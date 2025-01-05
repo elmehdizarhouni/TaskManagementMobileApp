@@ -49,10 +49,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
             dateTextView.setText(selectedCourse.getDate());
             teacherTextView.setText(selectedCourse.getTeacher());
 
-            // Charger l'image avec Glide
-            Glide.with(this)
-                    .load(selectedCourse.getDocUri())
-                    .into(courseImageView);
+
         }
     }
 }

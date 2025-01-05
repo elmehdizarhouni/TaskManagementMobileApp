@@ -9,14 +9,16 @@ public class Course implements Serializable {
     private String date; // Date du cours (équivalent à "deadline" dans Tache)
     private String teacher; // Nom ou identifiant de l'enseignant
     private String id; // Identifiant unique du cours
-    private String docUri; // Document lié au cours (facultatif)
+    private String img;
+    private String doc_uri;
 
     // Constructeur principal
-    public Course(String subject, String description, String date, String teacher, String id) {
+    public Course(String subject, String description, String date, String teacher,String img, String id) {
         this.subject = subject;
         this.description = description;
         this.date = date;
         this.teacher = teacher;
+        this.img=img;
         this.id = id;
     }
 
@@ -65,11 +67,19 @@ public class Course implements Serializable {
         this.id = id;
     }
 
-    public String getDocUri() {
-        return docUri;
+    public String getImg() {
+        return img;
     }
 
-    public void setDocUri(String docUri) {
-        this.docUri = docUri;
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getDoc_uri() {
+        return doc_uri;
+    }
+
+    public void setDoc_uri(String doc_uri) {
+        this.doc_uri = doc_uri;
     }
 }

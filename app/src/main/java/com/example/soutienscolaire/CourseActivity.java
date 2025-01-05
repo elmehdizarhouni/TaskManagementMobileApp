@@ -61,7 +61,7 @@ public class CourseActivity extends HomeActivity {
         toggle.syncState();
 
         // Load the image from Firebase Storage using Glide
-        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(selectedCourse.getDocUri());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(selectedCourse.getImg());
         Glide.with(this)
                 .load(storageReference)
                 .into(imageView);
