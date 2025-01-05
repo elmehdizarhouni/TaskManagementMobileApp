@@ -17,52 +17,51 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import model.Tache;
+import model.Course;
 
-public class TaskActivity extends HomeActivity {
+public class CourseActivity extends HomeActivity {
     TextView titleTextView;
     TextView descriptionTextView;
     TextView deadlineTextView;
     ImageView imageView;
     String documentId;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task);
+        setContentView(R.layout.activity_course);
+
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(getResources().getColor(R.color.purple_200));
 
-        // Get the selected task from the intent
+        // Get the selected course from the intent
         Intent intent = getIntent();
-        Tache selectedTask = (Tache) intent.getSerializableExtra("task");
-        documentId = selectedTask.getId();
+        Course selectedCourse = (Course) intent.getSerializableExtra("course"); // Remplacez "task" par "course"
+        documentId = selectedCourse.getId();
 
-        // Display the details of the selected task
-        titleTextView = (TextView) findViewById(R.id.titleTextView);
-        descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
-        deadlineTextView = (TextView) findViewById(R.id.deadlineTextView);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        // Display the details of the selected course
+        titleTextView = findViewById(R.id.titleTextView);
+        descriptionTextView = findViewById(R.id.descriptionTextView);
+        deadlineTextView = findViewById(R.id.deadlineTextView);
+        imageView = findViewById(R.id.imageView);
 
-        titleTextView.setText(selectedTask.getTitle());
-        descriptionTextView.setText(selectedTask.getDescription());
-        deadlineTextView.setText(selectedTask.getDeadline());
-
+        titleTextView.setText(selectedCourse.getSubject());
+        descriptionTextView.setText(selectedCourse.getDescription());
+        deadlineTextView.setText(selectedCourse.getDate());
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,  R.string.open_nav,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_nav,
                 R.string.close_nav);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.black));
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         // Load the image from Firebase Storage using Glide
-        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(selectedTask.getImg());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(selectedCourse.getDocUri());
         Glide.with(this)
                 .load(storageReference)
                 .into(imageView);
@@ -72,21 +71,21 @@ public class TaskActivity extends HomeActivity {
             @Override
             public void onClick(View v) {
                 // Call the method to show delete confirmation dialog
-                DeleteTaskActivity.showDeleteConfirmationDialog(TaskActivity.this, documentId);
+                DeleteCourseActivity.showDeleteConfirmationDialog(CourseActivity.this, documentId);
             }
         });
+
         FloatingActionButton updateButton = findViewById(R.id.updatebutton);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create an intent to start UpdateTaskActivity
-                Intent updateIntent = new Intent(TaskActivity.this, UpdateTaskActivity.class);
-                // Pass the ID of the task to update to UpdateTaskActivity
-                updateIntent.putExtra("taskId", documentId);
-                // Start the activity UpdateTaskActivity
+                // Create an intent to start UpdateCourseActivity
+                Intent updateIntent = new Intent(CourseActivity.this, UpdateCourseActivity.class);
+                // Pass the ID of the course to update to UpdateCourseActivity
+                updateIntent.putExtra("courseId", documentId);
+                // Start the activity UpdateCourseActivity
                 startActivity(updateIntent);
             }
         });
-
     }
 }
